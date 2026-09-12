@@ -1,10 +1,656 @@
-html<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>My GitHub Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M.W. Refrigeration Services — Keep It Cool, Keep It Running</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#081E3A;
+    --navy:#0F3D74;
+    --blue:#1868B8;
+    --ice:#5AC8FA;
+    --amber:#F2A73B;
+    --paper:#F5F8FB;
+    --ink:#0B1E30;
+    --ink-soft:#4C6076;
+    --line:#D7E2EC;
+    --white:#FFFFFF;
+
+    --space-1:.5rem;
+    --space-2:1rem;
+    --space-3:1.5rem;
+    --space-4:2.5rem;
+    --space-5:4rem;
+    --space-6:6rem;
+
+    --radius:10px;
+    --shadow:0 12px 30px rgba(8,30,58,.14);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',sans-serif;
+    margin:0;
+    color:var(--navy-deep);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0 0 var(--space-2);color:var(--ink-soft);max-width:62ch;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  section{display:none;}
+  section.active{display:block;}
+  img,svg{display:block;}
+
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{animation:rise .6s ease both;}
+    @keyframes rise{
+      from{opacity:0;transform:translateY(14px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+  }
+
+  /* ---------- NAV ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:var(--navy-deep);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .topbar-inner{
+    max-width:1180px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.85rem var(--space-3);
+    gap:var(--space-3);
+  }
+  .brand{display:flex;align-items:center;gap:.65rem;}
+  .brand-mark{width:38px;height:38px;flex:none;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text strong{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--white);font-size:1.05rem;font-weight:700;letter-spacing:.01em;
+  }
+  .brand-text span{color:var(--ice);font-size:.7rem;font-weight:500;letter-spacing:.04em;}
+
+  nav.mainnav{display:flex;gap:var(--space-3);}
+  nav.mainnav button{
+    color:rgba(255,255,255,.72);
+    font-size:.92rem;font-weight:500;
+    padding:.4rem 0;position:relative;
+  }
+  nav.mainnav button.active{color:var(--white);}
+  nav.mainnav button.active::after{
+    content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;
+    background:var(--ice);border-radius:2px;
+  }
+  .nav-cta{
+    display:flex;align-items:center;gap:.4rem;
+    background:var(--ice);color:var(--navy-deep)!important;
+    padding:.55rem 1rem;border-radius:100px;
+    font-size:.85rem;font-weight:600;white-space:nowrap;
+  }
+  .nav-cta svg{width:16px;height:16px;}
+  .menu-toggle{display:none;color:var(--white);}
+
+  @media (max-width:820px){
+    nav.mainnav{
+      position:fixed;top:64px;left:0;right:0;bottom:0;
+      background:var(--navy-deep);
+      flex-direction:column;
+      padding:var(--space-3);
+      gap:var(--space-2);
+      transform:translateX(100%);
+      transition:transform .3s ease;
+    }
+    nav.mainnav.open{transform:translateX(0);}
+    nav.mainnav button{font-size:1.1rem;padding:.6rem 0;}
+    .menu-toggle{display:block;}
+    .nav-cta.desktop-only{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:var(--navy-deep);
+    color:var(--white);
+  }
+  .hero-inner{
+    max-width:1180px;margin:0 auto;
+    padding:var(--space-6) var(--space-3) var(--space-5);
+    display:grid;grid-template-columns:1.1fr .9fr;gap:var(--space-4);align-items:center;
+    position:relative;z-index:2;
+  }
+  .hero-diag{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(115deg,transparent 55%, rgba(90,200,250,.16) 55%, rgba(90,200,250,.16) 58%, transparent 58%),
+               linear-gradient(115deg,transparent 63%, rgba(90,200,250,.10) 63%, rgba(90,200,250,.10) 65%, transparent 65%);
+  }
+  .eyebrow{color:var(--ice);font-weight:600;font-size:.85rem;margin-bottom:var(--space-2);}
+  .hero h1{font-size:clamp(2.1rem,4.2vw,3.4rem);font-weight:700;color:var(--white);line-height:1.08;}
+  .hero p.lead{color:rgba(255,255,255,.78);font-size:1.08rem;margin-top:var(--space-2);max-width:44ch;}
+  .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:var(--space-3);}
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:.85rem 1.4rem;border-radius:100px;font-weight:600;font-size:.95rem;
+  }
+  .btn svg{width:18px;height:18px;}
+  .btn-primary{background:var(--ice);color:var(--navy-deep);}
+  .btn-ghost{border:1px solid rgba(255,255,255,.35);color:var(--white);}
+
+  .dial-wrap{display:flex;justify-content:center;}
+  .dial-caption{
+    text-align:center;color:rgba(255,255,255,.65);font-size:.8rem;margin-top:.6rem;
+  }
+
+  .strip{
+    background:var(--navy);border-top:1px solid rgba(255,255,255,.08);
+  }
+  .strip-inner{
+    max-width:1180px;margin:0 auto;padding:var(--space-3);
+    display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:space-between;align-items:center;
+    color:rgba(255,255,255,.85);font-size:.92rem;
+  }
+  .strip-item{display:flex;align-items:center;gap:.55rem;}
+  .strip-item svg{width:20px;height:20px;flex:none;color:var(--ice);}
+
+  /* ---------- GENERIC SECTIONS ---------- */
+  .section{max-width:1180px;margin:0 auto;padding:var(--space-5) var(--space-3);}
+  .section-head{max-width:56ch;margin-bottom:var(--space-4);}
+  .section-head h2{font-size:clamp(1.6rem,2.6vw,2.2rem);}
+  .section-tight{padding-top:var(--space-4);padding-bottom:var(--space-4);}
+  .kicker{
+    color:var(--blue);font-weight:600;font-size:.85rem;margin-bottom:.5rem;
+  }
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);}
+  @media (max-width:820px){.grid-3,.grid-2,.hero-inner{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:var(--space-3);
+  }
+  .card h3{font-size:1.05rem;margin-bottom:.4rem;}
+  .card svg{width:30px;height:30px;color:var(--blue);margin-bottom:var(--space-2);}
+
+  /* Process rail on services page — genuine sequence, so numbered */
+  .rail{display:flex;flex-direction:column;border-left:2px solid var(--line);margin-left:14px;}
+  .rail-step{position:relative;padding:0 0 var(--space-4) var(--space-3);}
+  .rail-step:last-child{padding-bottom:0;}
+  .rail-num{
+    position:absolute;left:-15px;top:0;width:28px;height:28px;border-radius:50%;
+    background:var(--navy-deep);color:var(--white);font-family:'Space Grotesk',sans-serif;
+    font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  .rail-step h4{font-size:1.02rem;margin-bottom:.25rem;}
+
+  /* Service spec sheets */
+  .spec{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .spec-head{
+    display:flex;align-items:center;gap:.75rem;
+    background:var(--navy-deep);color:var(--white);
+    padding:var(--space-2) var(--space-3);
+  }
+  .spec-head svg{width:26px;height:26px;color:var(--ice);flex:none;}
+  .spec-head h3{color:var(--white);font-size:1.1rem;}
+  .spec-list{padding:var(--space-3);}
+  .spec-list li{
+    display:flex;gap:.6rem;padding:.5rem 0;border-bottom:1px dashed var(--line);
+    font-size:.95rem;color:var(--ink);
+  }
+  .spec-list li:last-child{border-bottom:none;}
+  .spec-list svg{width:17px;height:17px;color:var(--blue);flex:none;margin-top:.15rem;}
+
+  .cta-band{
+    background:var(--navy-deep);color:var(--white);border-radius:var(--radius);
+    padding:var(--space-4);display:flex;flex-wrap:wrap;justify-content:space-between;
+    align-items:center;gap:var(--space-3);margin-top:var(--space-5);
+  }
+  .cta-band h3{color:var(--white);font-size:1.3rem;max-width:32ch;}
+  .cta-band p{color:rgba(255,255,255,.72);}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);}
+  @media (max-width:820px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:var(--space-3);
+  }
+  .contact-line{
+    display:flex;align-items:center;gap:.85rem;padding:.75rem 0;border-bottom:1px solid var(--line);
+  }
+  .contact-line:last-child{border-bottom:none;}
+  .contact-line svg{width:22px;height:22px;color:var(--blue);flex:none;}
+  .contact-line strong{display:block;font-size:1.05rem;color:var(--ink);}
+  .contact-line span{font-size:.85rem;color:var(--ink-soft);}
+
+  .field{margin-bottom:var(--space-2);}
+  .field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:.35rem;color:var(--ink);}
+  .field input,.field select,.field textarea{
+    width:100%;padding:.7rem .85rem;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:.95rem;background:var(--paper);color:var(--ink);
+  }
+  .field textarea{min-height:100px;resize:vertical;}
+  .form-note{font-size:.8rem;color:var(--ink-soft);margin-top:var(--space-2);}
+  .submit-btn{
+    background:var(--navy-deep);color:var(--white);padding:.85rem 1.4rem;
+    border-radius:100px;font-weight:600;font-size:.95rem;display:inline-flex;align-items:center;gap:.5rem;
+  }
+
+  /* ---------- BLOG ---------- */
+  .blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-3);}
+  @media (max-width:820px){.blog-grid{grid-template-columns:1fr;}}
+  .post{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  .post-top{
+    height:110px;background:linear-gradient(120deg,var(--navy) 0%,var(--blue) 55%,var(--ice) 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .post-top svg{width:40px;height:40px;color:rgba(255,255,255,.9);}
+  .post-body{padding:var(--space-3);}
+  .post-date{font-size:.78rem;color:var(--blue);font-weight:600;margin-bottom:.35rem;}
+  .post h3{font-size:1.08rem;margin-bottom:.5rem;}
+  .post p{font-size:.92rem;}
+  .post-read{font-size:.85rem;font-weight:600;color:var(--navy-deep);margin-top:.5rem;display:inline-flex;align-items:center;gap:.3rem;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy-deep);color:rgba(255,255,255,.6);}
+  .footer-inner{
+    max-width:1180px;margin:0 auto;padding:var(--space-4) var(--space-3);
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-3);
+    font-size:.85rem;
+  }
+  .footer-inner strong{color:var(--white);}
+  .wa-float{
+    position:fixed;bottom:22px;right:22px;z-index:60;
+    width:56px;height:56px;border-radius:50%;
+    background:#25D366;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+  }
+  .wa-float svg{width:28px;height:28px;color:var(--white);}
+</style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>Welcome to my website designed using GitHub.</p>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none">
+        <path d="M24 4a20 20 0 1 0 0 40 16 16 0 0 1 0-40Z" fill="var(--ice)" opacity="0.35"/>
+        <path d="M24 10v28M14 16l20 16M34 16 14 32" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M24 10l-3 3M24 10l3 3M24 38l-3-3M24 38l3-3M14 16l4 .6M14 16l1 4M34 16l-4 .6M34 16l-1 4M14 32l4-.6M14 32l1-4M34 32l-4-.6M34 32l-1-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <strong>M.W. Refrigeration</strong>
+        <span>KEEP IT COOL, KEEP IT RUNNING</span>
+      </div>
+    </div>
+    <nav class="mainnav" id="mainnav">
+      <button data-page="home" class="active">Home</button>
+      <button data-page="services">Services</button>
+      <button data-page="blog">Blog</button>
+      <button data-page="contact">Contact</button>
+      <a class="nav-cta" href="https://wa.me/263787277875" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.2-3.5-.7-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5c-.1.2-.3.3-.1.6.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.1.5.1.7-.1l.6-.7c.2-.3.4-.2.7-.1l1.8.9c.2.1.4.2.5.3.1.2.1 1-.1 1.7Z"/></svg>
+        WhatsApp
+      </a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-diag"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">Domestic &amp; commercial refrigeration and AC</div>
+        <h1>Keep it cool.<br>Keep it running.</h1>
+        <p class="lead">Fridges that won't hold their chill, split units blowing warm air, compressors on the way out — we diagnose it, fix it, and get your space back to the right temperature.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://wa.me/263787277875" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.2-3.5-.7-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5c-.1.2-.3.3-.1.6.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.1.5.1.7-.1l.6-.7c.2-.3.4-.2.7-.1l1.8.9c.2.1.4.2.5.3.1.2.1 1-.1 1.7Z"/></svg>
+            Message us on WhatsApp
+          </a>
+          <button class="btn btn-ghost" data-page="services">See what we repair</button>
+        </div>
+      </div>
+      <div>
+        <div class="dial-wrap">
+          <svg width="260" height="200" viewBox="0 0 260 200" fill="none">
+            <path d="M30 160 A100 100 0 0 1 230 160" stroke="rgba(255,255,255,.18)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M30 160 A100 100 0 0 1 130 60" stroke="var(--ice)" stroke-width="14" stroke-linecap="round"/>
+            <path d="M130 60 A100 100 0 0 1 230 160" stroke="var(--amber)" stroke-width="14" stroke-linecap="round"/>
+            <circle cx="130" cy="160" r="7" fill="#fff"/>
+            <line x1="130" y1="160" x2="90" y2="95" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(20,150)" stroke="#fff" stroke-width="2" stroke-linecap="round">
+              <line x1="0" y1="0" x2="0" y2="12"/><line x1="-6" y1="6" x2="6" y2="6"/>
+              <line x1="-4" y1="-4" x2="4" y2="16" transform="rotate(45 0 6)"/>
+            </g>
+            <g transform="translate(238,150)" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none">
+              <circle cx="0" cy="0" r="7"/>
+              <path d="M0 -7 A7 7 0 0 1 0 7 A5 5 0 0 0 0 -7Z" fill="#fff" stroke="none"/>
+            </g>
+          </svg>
+        </div>
+        <p class="dial-caption">From deep-freeze diagnostics to full AC recharges</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="strip-inner">
+      <div class="strip-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"/><path d="M12 7v5l3 2"/></svg>
+        Same-week callouts, most areas
+      </div>
+      <div class="strip-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4.4-3-8-6.5-8-11a8 8 0 0 1 16 0c0 4.5-3.6 8-8 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        Domestic and commercial units
+      </div>
+      <div class="strip-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg>
+        Parts, labour and gas all quoted upfront
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="kicker">What we work on</div>
+      <h2>Two systems, one job: holding the temperature you set.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="1.5"/><line x1="5" y1="12" x2="19" y2="12"/><line x1="9" y1="5" x2="9" y2="8"/><line x1="9" y1="15" x2="9" y2="18"/></svg>
+        <h3>Refrigerators</h3>
+        <p>Thermostat faults, compressor swaps, defrost issues, door seals that let the cold escape.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="6" rx="1.5"/><path d="M6 12v3M18 12v3M8 15h8"/></svg>
+        <h3>Air conditioners</h3>
+        <p>Gas recharges, new installs, servicing, leak repair, PCB and fan motor faults.</p>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V9l6-4 6 4v12"/><path d="M10 21v-6h4v6"/></svg>
+        <h3>Homes &amp; businesses</h3>
+        <p>Single households, restaurants, offices and cold rooms — sized-up support either way.</p>
+      </div>
+    </div>
+
+    <div class="cta-band">
+      <div>
+        <h3>Something not cooling right now?</h3>
+        <p>Send a WhatsApp with what's wrong and we'll tell you what it likely needs before we even arrive.</p>
+      </div>
+      <a class="btn btn-primary" href="https://wa.me/263787277875" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="page">
+  <div class="section">
+    <div class="section-head">
+      <div class="kicker">Services</div>
+      <h2>Full spec sheet, no guesswork.</h2>
+      <p>Every job starts with a proper diagnosis. Here's exactly what's covered on each system.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="spec">
+        <div class="spec-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="1.5"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <h3>Refrigerators</h3>
+        </div>
+        <ul class="spec-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Gas refilling</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Thermostat repair</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Compressor replacement</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Defrost system repair</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Door seal replacement</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>General servicing</li>
+        </ul>
+      </div>
+
+      <div class="spec">
+        <div class="spec-head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="6" rx="1.5"/><path d="M6 12v3M18 12v3M8 15h8"/></svg>
+          <h3>Air conditioners</h3>
+        </div>
+        <ul class="spec-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Gas refilling / recharge</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Installation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Uninstallation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Servicing &amp; cleaning</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Leak repair</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>Compressor &amp; fan motor repair</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 13 4 4L19 7"/></svg>PCB / board repair</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-tight" style="padding-top:0;">
+    <div class="section-head">
+      <div class="kicker">How a callout works</div>
+      <h2>From first message to running cool again.</h2>
+    </div>
+    <div class="rail">
+      <div class="rail-step">
+        <div class="rail-num">1</div>
+        <h4>Tell us what's happening</h4>
+        <p>Message or call with the make, the problem, and whether it's a home or commercial unit.</p>
+      </div>
+      <div class="rail-step">
+        <div class="rail-num">2</div>
+        <h4>We diagnose on site</h4>
+        <p>A technician checks the gas, electrics and mechanical parts to confirm the actual fault.</p>
+      </div>
+      <div class="rail-step">
+        <div class="rail-num">3</div>
+        <h4>You approve the fix</h4>
+        <p>Parts, labour and gas are quoted before any work starts — no surprise line items.</p>
+      </div>
+      <div class="rail-step">
+        <div class="rail-num">4</div>
+        <h4>We test before we leave</h4>
+        <p>The unit runs a full cycle in front of you so you know it's actually holding temperature.</p>
+      </div>
+    </div>
+
+    <div class="cta-band">
+      <div>
+        <h3>Ready to book a callout?</h3>
+        <p>We cover both domestic households and commercial premises.</p>
+      </div>
+      <a class="btn btn-primary" href="https://wa.me/263787277875" target="_blank" rel="noopener">Book on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOG ============ -->
+<section id="blog" class="page">
+  <div class="section">
+    <div class="section-head">
+      <div class="kicker">Blog</div>
+      <h2>Notes from the field.</h2>
+      <p>Practical guidance for keeping fridges and AC units running longer between callouts.</p>
+    </div>
+
+    <div class="blog-grid">
+      <article class="post">
+        <div class="post-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="14" height="20" rx="1.5"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="post-body">
+          <div class="post-date">12 August 2026</div>
+          <h3>Five signs your fridge compressor is failing</h3>
+          <p>A warm fridge isn't always the compressor — but a loud hum, frequent cycling and frost buildup usually point that way. Here's what to check first.</p>
+          <span class="post-read">Read more →</span>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="6" rx="1.5"/><path d="M6 12v3M18 12v3M8 15h8"/></svg>
+        </div>
+        <div class="post-body">
+          <div class="post-date">28 July 2026</div>
+          <h3>Why your split unit blows air but won't cool</h3>
+          <p>Low gas is the most common cause, but a blocked outdoor unit or a failing capacitor can look identical from the remote. A quick way to tell them apart.</p>
+          <span class="post-read">Read more →</span>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v3M12 18v3M4.2 4.2l2.2 2.2M17.6 17.6l2.2 2.2M3 12h3M18 12h3M4.2 19.8l2.2-2.2M17.6 6.4l2.2-2.2"/><circle cx="12" cy="12" r="4"/></svg>
+        </div>
+        <div class="post-body">
+          <div class="post-date">15 June 2026</div>
+          <h3>Servicing your AC before the hot season</h3>
+          <p>A clean filter and coil can cut running costs noticeably. What a standard service visit actually covers, and how often to book one.</p>
+          <span class="post-read">Read more →</span>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M6 21V9l6-4 6 4v12"/><path d="M10 21v-6h4v6"/></svg>
+        </div>
+        <div class="post-body">
+          <div class="post-date">2 May 2026</div>
+          <h3>Cold rooms for small businesses: what to budget for</h3>
+          <p>Beyond the unit itself — insulation, door seals and load size all affect running cost. A rough guide for restaurants and shops sizing up.</p>
+          <span class="post-read">Read more →</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="page">
+  <div class="section">
+    <div class="section-head">
+      <div class="kicker">Contact</div>
+      <h2>Tell us what's not cooling.</h2>
+      <p>WhatsApp is the fastest way to reach us — send a photo of the unit if you can.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.2-3.5-.7-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5c-.1.2-.3.3-.1.6.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.1.5.1.7-.1l.6-.7c.2-.3.4-.2.7-.1l1.8.9c.2.1.4.2.5.3.1.2.1 1-.1 1.7Z"/></svg>
+          <div><strong>+263 787 277 875</strong><span>WhatsApp — fastest response</span></div>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L7.9 9.6a16 16 0 0 0 6 6l1.1-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6A2 2 0 0 1 22 16.9Z"/></svg>
+          <div><strong>+263 787 277 875</strong><span>Calls</span></div>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c-4.4-3-8-6.5-8-11a8 8 0 0 1 16 0c0 4.5-3.6 8-8 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <div><strong>Domestic &amp; commercial</strong><span>Households, offices, restaurants, cold rooms</span></div>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Z"/><path d="M12 7v5l3 2"/></svg>
+          <div><strong>Mon–Sat, 8am–6pm</strong><span>Emergency callouts by arrangement</span></div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <h3 style="margin-bottom:1rem;">Request a callout</h3>
+        <div class="field">
+          <label for="c-name">Name</label>
+          <input id="c-name" type="text" placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="c-unit">What needs looking at?</label>
+          <select id="c-unit">
+            <option>Refrigerator</option>
+            <option>Air conditioner</option>
+            <option>Cold room</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-msg">Describe the problem</label>
+          <textarea id="c-msg" placeholder="e.g. Not cooling, warm air, strange noise"></textarea>
+        </div>
+        <button type="button" class="submit-btn" id="sendBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.2-3.5-.7-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5c-.1.2-.3.3-.1.6.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.1.5.1.7-.1l.6-.7c.2-.3.4-.2.7-.1l1.8.9c.2.1.4.2.5.3.1.2.1 1-.1 1.7Z"/></svg>
+          Send via WhatsApp
+        </button>
+        <p class="form-note">This opens WhatsApp with your details pre-filled — nothing is stored on this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><strong>M.W. Refrigeration Services</strong><br>Keep it cool, keep it running.</div>
+    <div>+263 787 277 875 · WhatsApp &amp; calls</div>
+    <div>Domestic &amp; commercial units</div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/263787277875" target="_blank" rel="noopener" aria-label="WhatsApp us">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.2-3.5-.7-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.5c-.1.2-.3.3-.1.6.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.7.3.1.5.1.7-.1l.6-.7c.2-.3.4-.2.7-.1l1.8.9c.2.1.4.2.5.3.1.2.1 1-.1 1.7Z"/></svg>
+</a>
+
+<script>
+  const pages = document.querySelectorAll('section.page');
+  const navBtns = document.querySelectorAll('[data-page]');
+  const mainnav = document.getElementById('mainnav');
+  const menuToggle = document.getElementById('menuToggle');
+
+  function goTo(id){
+    pages.forEach(p => p.classList.toggle('active', p.id === id));
+    document.querySelectorAll('nav.mainnav button').forEach(b =>
+      b.classList.toggle('active', b.dataset.page === id)
+    );
+    mainnav.classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+    history.replaceState(null, '', '#' + id);
+  }
+
+  navBtns.forEach(btn => btn.addEventListener('click', () => goTo(btn.dataset.page)));
+  menuToggle.addEventListener('click', () => mainnav.classList.toggle('open'));
+
+  const startId = location.hash ? location.hash.slice(1) : 'home';
+  if (document.getElementById(startId)) goTo(startId);
+
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    const name = document.getElementById('c-name').value || 'there';
+    const unit = document.getElementById('c-unit').value;
+    const msg = document.getElementById('c-msg').value || 'no details added yet';
+    const text = encodeURIComponent(
+      `Hi, I'm ${name}. I need help with a ${unit.toLowerCase()}. Issue: ${msg}`
+    );
+    window.open(`https://wa.me/263787277875?text=${text}`, '_blank');
+  });
+</script>
+
 </body>
 </html>
